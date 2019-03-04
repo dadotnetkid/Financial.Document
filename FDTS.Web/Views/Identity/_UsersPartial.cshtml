@@ -1,0 +1,31 @@
+﻿@model IQueryable<Users>
+@using FDTS.Services
+@{
+    Html.DevExpress().ComboBox(settings =>
+    {
+        settings.Width = Unit.Percentage(100);
+        settings.Name = "UserId";
+
+        settings.CallbackRouteValues = new { Controller = "Identity", Action = "UsersPartial" };
+        settings.Properties.TextField = "FullName";
+        settings.Properties.ValueField = "Id";
+
+        settings.Properties.Caption = "User";
+        settings.Properties.CaptionSettings.Position = EditorCaptionPosition.Top;
+
+        settings.PreRender = (s, e) =>
+        {
+            MVCxComboBox combo = s as MVCxComboBox;
+
+            combo.Value=ViewBag.UserId;
+        };
+
+
+    }).BindList(args => Model.OrderBy(m => m.Id).GetRange(args), args =>
+    {
+        var Id = args?.Value?.ToString();
+        return Model.GetById(m => m.Id == Id);
+    })
+
+        .GetHtml();
+}

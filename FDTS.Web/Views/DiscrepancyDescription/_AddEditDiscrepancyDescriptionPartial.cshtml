@@ -1,0 +1,34 @@
+﻿@using FDTS.Services
+@model DiscrepancyDescriptions
+@{
+    var departments = new DiscrepancyDescriptionViewModel().Departments;
+}
+<div class="row">
+    <div class="col-lg-6">
+        @{
+            Html.DevExpress().TextBoxFor(m => m.Description, settings =>
+            {
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.Caption = "Description";
+                settings.Properties.CaptionSettings.Position = EditorCaptionPosition.Top;
+            }).GetHtml();
+        }
+    </div>
+    <div class="col-lg-6">
+        @{
+            Html.DevExpress().ComboBoxFor(m => m.DepartmentId, settings =>
+            {
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.Caption = "Department";
+                settings.Properties.CaptionSettings.Position = EditorCaptionPosition.Top;
+
+                settings.Properties.ValueField = "Id";
+                settings.Properties.TextField = "DepartmentName";
+            }).BindList(args => departments.OrderBy(m => m.Id).GetRange(args), args =>
+            {
+                return Model.DepartmentId;
+
+            }).GetHtml();
+        }
+    </div>
+</div>

@@ -1,0 +1,20 @@
+﻿
+@model DocumentAttachments
+
+<div class="row">
+    <div class="col-lg-6">
+        @{
+            Html.DevExpress().TextBoxFor(m => m.AttachmentTitle, settings =>
+            {
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.Caption = "Attachment Title";
+                settings.Properties.CaptionSettings.Position = EditorCaptionPosition.Top;
+            }).GetHtml();
+        }
+    </div>
+    <div class="col-lg-6">
+        @{
+            Html.RenderAction("cboDepartmentPartial", new {item = Model});
+        }
+    </div>
+</div>

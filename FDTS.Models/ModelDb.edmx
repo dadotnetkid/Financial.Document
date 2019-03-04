@@ -1,0 +1,1254 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="financialdocumenttrackersystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AddressStateProvinces">
+          <Key>
+            <PropertyRef Name="StateProvinceId" />
+          </Key>
+          <Property Name="StateProvinceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="SortOrder" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AddressTownCities">
+          <Key>
+            <PropertyRef Name="TownCityId" />
+          </Key>
+          <Property Name="TownCityId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="StateProvinceId" Type="int" Nullable="false" />
+          <Property Name="SortOrder" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Departments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepartmentName" Type="nvarchar" MaxLength="128" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="DateModified" Type="datetime" />
+        </EntityType>
+        <EntityType Name="DiscrepancyDescriptions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="128" />
+          <Property Name="DepartmentId" Type="int" />
+        </EntityType>
+        <EntityType Name="DocumentAttachments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AttachmentTitle" Type="nvarchar" MaxLength="128" />
+          <Property Name="DepartmentId" Type="int" />
+        </EntityType>
+        <EntityType Name="RequestTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RequestType" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="TraceDiscrepancies">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TraceTransactionId" Type="int" />
+          <Property Name="DocumentAttachmentId" Type="int" />
+          <Property Name="DiscrepancyDescriptionId" Type="int" />
+          <Property Name="DiscrepancyNotes" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="TraceDocuments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Barcode" Type="int" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="RequestTypeId" Type="int" />
+          <Property Name="CreatedById" Type="nvarchar" MaxLength="128" />
+          <Property Name="DocumentAttachmentId" Type="int" />
+          <Property Name="Upload" Type="varbinary(max)" />
+          <Property Name="LiasonId" Type="nvarchar" MaxLength="128" />
+          <Property Name="RequestingDepartmentId" Type="int" />
+        </EntityType>
+        <EntityType Name="TraceTransactions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TraceDocumentId" Type="int" />
+          <Property Name="TraceDate" Type="datetime" />
+          <Property Name="ReceivingPersonnelId" Type="nvarchar" MaxLength="128" />
+          <Property Name="LiasonId" Type="nvarchar" MaxLength="128" />
+          <Property Name="ReceivingDepartmentId" Type="int" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" />
+          <Property Name="isReceived" Type="bit" Nullable="false" />
+          <Property Name="isTransmit" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="UserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" />
+          <Property Name="DepartmentId" Type="int" />
+          <Property Name="BiometricId" Type="int" />
+          <Property Name="Email" Type="nvarchar" MaxLength="128" />
+          <Property Name="EmailConfirmed" Type="bit" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="25" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" />
+          <Property Name="TwoFactorEnabled" Type="bit" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" />
+          <Property Name="AccessFailedCount" Type="int" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastUpdatedBy" Type="nvarchar" MaxLength="150" />
+          <Property Name="LastUpdated" Type="datetime" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CivilStatus" Type="nvarchar" MaxLength="12" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="6" />
+          <Property Name="BirthDate" Type="datetime" />
+          <Property Name="AddressLine2" Type="nvarchar" MaxLength="500" />
+          <Property Name="AddressLine1" Type="nvarchar" MaxLength="500" />
+          <Property Name="TownCityId" Type="int" />
+          <Property Name="Cellular" Type="nvarchar" MaxLength="25" />
+          <Property Name="Height" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="Weight" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="Religion" Type="nvarchar" MaxLength="50" />
+          <Property Name="Citizenship" Type="nvarchar" MaxLength="50" />
+          <Property Name="Languages" Type="nvarchar(max)" />
+          <Property Name="Photo" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="UsersInRoles">
+          <Key>
+            <PropertyRef Name="UserRoles_Id" />
+            <PropertyRef Name="Users_Id" />
+          </Key>
+          <Property Name="UserRoles_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Users_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_dbo_AddressTownCities_dbo_AddressStateProvinces_StateProvinceId">
+          <End Role="AddressStateProvinces" Type="Self.AddressStateProvinces" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AddressTownCities" Type="Self.AddressTownCities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AddressStateProvinces">
+              <PropertyRef Name="StateProvinceId" />
+            </Principal>
+            <Dependent Role="AddressTownCities">
+              <PropertyRef Name="StateProvinceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DiscrepancyDescriptions_Departments">
+          <End Role="Departments" Type="Self.Departments" Multiplicity="0..1" />
+          <End Role="DiscrepancyDescriptions" Type="Self.DiscrepancyDescriptions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DiscrepancyDescriptions">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DocumentAttachments_Departments">
+          <End Role="Departments" Type="Self.Departments" Multiplicity="0..1" />
+          <End Role="DocumentAttachments" Type="Self.DocumentAttachments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DocumentAttachments">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TraceDiscrepancies_DiscrepancyDescriptions">
+          <End Role="DiscrepancyDescriptions" Type="Self.DiscrepancyDescriptions" Multiplicity="0..1" />
+          <End Role="TraceDiscrepancies" Type="Self.TraceDiscrepancies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DiscrepancyDescriptions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TraceDiscrepancies">
+              <PropertyRef Name="DiscrepancyDescriptionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TraceDiscrepancies_DocumentAttachments">
+          <End Role="DocumentAttachments" Type="Self.DocumentAttachments" Multiplicity="0..1" />
+          <End Role="TraceDiscrepancies" Type="Self.TraceDiscrepancies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocumentAttachments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TraceDiscrepancies">
+              <PropertyRef Name="DocumentAttachmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TraceDiscrepancies_TraceDiscrepancies">
+          <End Role="TraceTransactions" Type="Self.TraceTransactions" Multiplicity="0..1" />
+          <End Role="TraceDiscrepancies" Type="Self.TraceDiscrepancies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TraceTransactions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TraceDiscrepancies">
+              <PropertyRef Name="TraceTransactionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TraceDocuments_Created_By">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="TraceDocuments" Type="Self.TraceDocuments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TraceDocuments">
+              <PropertyRef Name="CreatedById" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TraceDocuments_DocumentAttachments">
+          <End Role="DocumentAttachments" Type="Self.DocumentAttachments" Multiplicity="0..1" />
+          <End Role="TraceDocuments" Type="Self.TraceDocuments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocumentAttachments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TraceDocuments">
+              <PropertyRef Name="DocumentAttachmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TraceDocuments_Liasons">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="TraceDocuments" Type="Self.TraceDocuments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TraceDocuments">
+              <PropertyRef Name="LiasonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TraceDocuments_Requesting_Department">
+          <End Role="Departments" Type="Self.Departments" Multiplicity="0..1" />
+          <End Role="TraceDocuments" Type="Self.TraceDocuments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TraceDocuments">
+              <PropertyRef Name="RequestingDepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TraceDocuments_RequestTypes">
+          <End Role="RequestTypes" Type="Self.RequestTypes" Multiplicity="0..1" />
+          <End Role="TraceDocuments" Type="Self.TraceDocuments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RequestTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TraceDocuments">
+              <PropertyRef Name="RequestTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TraceTransactions_Departments">
+          <End Role="Departments" Type="Self.Departments" Multiplicity="0..1" />
+          <End Role="TraceTransactions" Type="Self.TraceTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TraceTransactions">
+              <PropertyRef Name="ReceivingDepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TraceTransactions_Liason">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="TraceTransactions" Type="Self.TraceTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TraceTransactions">
+              <PropertyRef Name="LiasonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TraceTransactions_ReceivingPersonnel">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="TraceTransactions" Type="Self.TraceTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TraceTransactions">
+              <PropertyRef Name="ReceivingPersonnelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TraceTransactions_TraceDocuments">
+          <End Role="TraceDocuments" Type="Self.TraceDocuments" Multiplicity="0..1" />
+          <End Role="TraceTransactions" Type="Self.TraceTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TraceDocuments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TraceTransactions">
+              <PropertyRef Name="TraceDocumentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TraceTransactions_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="TraceTransactions" Type="Self.TraceTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TraceTransactions">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserClaims_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UserClaims" Type="Self.UserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserLogins_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UserLogins" Type="Self.UserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Departments">
+          <End Role="Departments" Type="Self.Departments" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersInRoles_UserRoles">
+          <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UsersInRoles" Type="Self.UsersInRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UsersInRoles">
+              <PropertyRef Name="UserRoles_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersInRoles_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UsersInRoles" Type="Self.UsersInRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UsersInRoles">
+              <PropertyRef Name="Users_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="financialdocumenttrackersystemModelStoreContainer">
+          <EntitySet Name="AddressStateProvinces" EntityType="Self.AddressStateProvinces" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AddressTownCities" EntityType="Self.AddressTownCities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Departments" EntityType="Self.Departments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DiscrepancyDescriptions" EntityType="Self.DiscrepancyDescriptions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DocumentAttachments" EntityType="Self.DocumentAttachments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RequestTypes" EntityType="Self.RequestTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TraceDiscrepancies" EntityType="Self.TraceDiscrepancies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TraceDocuments" EntityType="Self.TraceDocuments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TraceTransactions" EntityType="Self.TraceTransactions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserClaims" EntityType="Self.UserClaims" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserLogins" EntityType="Self.UserLogins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsersInRoles" EntityType="Self.UsersInRoles" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_AddressTownCities_dbo_AddressStateProvinces_StateProvinceId" Association="Self.FK_dbo_AddressTownCities_dbo_AddressStateProvinces_StateProvinceId">
+            <End Role="AddressStateProvinces" EntitySet="AddressStateProvinces" />
+            <End Role="AddressTownCities" EntitySet="AddressTownCities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DiscrepancyDescriptions_Departments" Association="Self.FK_DiscrepancyDescriptions_Departments">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="DiscrepancyDescriptions" EntitySet="DiscrepancyDescriptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DocumentAttachments_Departments" Association="Self.FK_DocumentAttachments_Departments">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="DocumentAttachments" EntitySet="DocumentAttachments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraceDiscrepancies_DiscrepancyDescriptions" Association="Self.FK_TraceDiscrepancies_DiscrepancyDescriptions">
+            <End Role="DiscrepancyDescriptions" EntitySet="DiscrepancyDescriptions" />
+            <End Role="TraceDiscrepancies" EntitySet="TraceDiscrepancies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraceDiscrepancies_DocumentAttachments" Association="Self.FK_TraceDiscrepancies_DocumentAttachments">
+            <End Role="DocumentAttachments" EntitySet="DocumentAttachments" />
+            <End Role="TraceDiscrepancies" EntitySet="TraceDiscrepancies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraceDiscrepancies_TraceDiscrepancies" Association="Self.FK_TraceDiscrepancies_TraceDiscrepancies">
+            <End Role="TraceTransactions" EntitySet="TraceTransactions" />
+            <End Role="TraceDiscrepancies" EntitySet="TraceDiscrepancies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraceDocuments_Created_By" Association="Self.FK_TraceDocuments_Created_By">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="TraceDocuments" EntitySet="TraceDocuments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraceDocuments_DocumentAttachments" Association="Self.FK_TraceDocuments_DocumentAttachments">
+            <End Role="DocumentAttachments" EntitySet="DocumentAttachments" />
+            <End Role="TraceDocuments" EntitySet="TraceDocuments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraceDocuments_Liasons" Association="Self.FK_TraceDocuments_Liasons">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="TraceDocuments" EntitySet="TraceDocuments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraceDocuments_Requesting_Department" Association="Self.FK_TraceDocuments_Requesting_Department">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="TraceDocuments" EntitySet="TraceDocuments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraceDocuments_RequestTypes" Association="Self.FK_TraceDocuments_RequestTypes">
+            <End Role="RequestTypes" EntitySet="RequestTypes" />
+            <End Role="TraceDocuments" EntitySet="TraceDocuments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraceTransactions_Departments" Association="Self.FK_TraceTransactions_Departments">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="TraceTransactions" EntitySet="TraceTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraceTransactions_Liason" Association="Self.FK_TraceTransactions_Liason">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="TraceTransactions" EntitySet="TraceTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraceTransactions_ReceivingPersonnel" Association="Self.FK_TraceTransactions_ReceivingPersonnel">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="TraceTransactions" EntitySet="TraceTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraceTransactions_TraceDocuments" Association="Self.FK_TraceTransactions_TraceDocuments">
+            <End Role="TraceDocuments" EntitySet="TraceDocuments" />
+            <End Role="TraceTransactions" EntitySet="TraceTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraceTransactions_Users" Association="Self.FK_TraceTransactions_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="TraceTransactions" EntitySet="TraceTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserClaims_Users" Association="Self.FK_UserClaims_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserClaims" EntitySet="UserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserLogins_Users" Association="Self.FK_UserLogins_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserLogins" EntitySet="UserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Departments" Association="Self.FK_Users_Departments">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersInRoles_UserRoles" Association="Self.FK_UsersInRoles_UserRoles">
+            <End Role="UserRoles" EntitySet="UserRoles" />
+            <End Role="UsersInRoles" EntitySet="UsersInRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersInRoles_Users" Association="Self.FK_UsersInRoles_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UsersInRoles" EntitySet="UsersInRoles" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="financialdocumenttrackersystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="FinancialdocumenttrackersystemEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AddressStateProvinces" EntityType="financialdocumenttrackersystemModel.AddressStateProvinces" />
+          <EntitySet Name="AddressTownCities" EntityType="financialdocumenttrackersystemModel.AddressTownCities" />
+          <EntitySet Name="Departments" EntityType="financialdocumenttrackersystemModel.Departments" />
+          <EntitySet Name="DiscrepancyDescriptions" EntityType="financialdocumenttrackersystemModel.DiscrepancyDescriptions" />
+          <EntitySet Name="DocumentAttachments" EntityType="financialdocumenttrackersystemModel.DocumentAttachments" />
+          <EntitySet Name="RequestTypes" EntityType="financialdocumenttrackersystemModel.RequestTypes" />
+          <EntitySet Name="TraceDiscrepancies" EntityType="financialdocumenttrackersystemModel.TraceDiscrepancies" />
+          <EntitySet Name="TraceDocuments" EntityType="financialdocumenttrackersystemModel.TraceDocuments" />
+          <EntitySet Name="TraceTransactions" EntityType="financialdocumenttrackersystemModel.TraceTransactions" />
+          <EntitySet Name="UserClaims" EntityType="financialdocumenttrackersystemModel.UserClaims" />
+          <EntitySet Name="UserLogins" EntityType="financialdocumenttrackersystemModel.UserLogins" />
+          <EntitySet Name="UserRoles" EntityType="financialdocumenttrackersystemModel.UserRoles" />
+          <EntitySet Name="Users" EntityType="financialdocumenttrackersystemModel.Users" />
+          <AssociationSet Name="FK_dbo_AddressTownCities_dbo_AddressStateProvinces_StateProvinceId" Association="financialdocumenttrackersystemModel.FK_dbo_AddressTownCities_dbo_AddressStateProvinces_StateProvinceId">
+            <End Role="AddressStateProvinces" EntitySet="AddressStateProvinces" />
+            <End Role="AddressTownCities" EntitySet="AddressTownCities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DiscrepancyDescriptions_Departments" Association="financialdocumenttrackersystemModel.FK_DiscrepancyDescriptions_Departments">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="DiscrepancyDescriptions" EntitySet="DiscrepancyDescriptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DocumentAttachments_Departments" Association="financialdocumenttrackersystemModel.FK_DocumentAttachments_Departments">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="DocumentAttachments" EntitySet="DocumentAttachments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraceDocuments_Requesting_Department" Association="financialdocumenttrackersystemModel.FK_TraceDocuments_Requesting_Department">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="TraceDocuments" EntitySet="TraceDocuments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraceTransactions_Departments" Association="financialdocumenttrackersystemModel.FK_TraceTransactions_Departments">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="TraceTransactions" EntitySet="TraceTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Departments" Association="financialdocumenttrackersystemModel.FK_Users_Departments">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraceDiscrepancies_DiscrepancyDescriptions" Association="financialdocumenttrackersystemModel.FK_TraceDiscrepancies_DiscrepancyDescriptions">
+            <End Role="DiscrepancyDescriptions" EntitySet="DiscrepancyDescriptions" />
+            <End Role="TraceDiscrepancies" EntitySet="TraceDiscrepancies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraceDiscrepancies_DocumentAttachments" Association="financialdocumenttrackersystemModel.FK_TraceDiscrepancies_DocumentAttachments">
+            <End Role="DocumentAttachments" EntitySet="DocumentAttachments" />
+            <End Role="TraceDiscrepancies" EntitySet="TraceDiscrepancies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraceDocuments_DocumentAttachments" Association="financialdocumenttrackersystemModel.FK_TraceDocuments_DocumentAttachments">
+            <End Role="DocumentAttachments" EntitySet="DocumentAttachments" />
+            <End Role="TraceDocuments" EntitySet="TraceDocuments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraceDocuments_RequestTypes" Association="financialdocumenttrackersystemModel.FK_TraceDocuments_RequestTypes">
+            <End Role="RequestTypes" EntitySet="RequestTypes" />
+            <End Role="TraceDocuments" EntitySet="TraceDocuments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraceDiscrepancies_TraceDiscrepancies" Association="financialdocumenttrackersystemModel.FK_TraceDiscrepancies_TraceDiscrepancies">
+            <End Role="TraceTransactions" EntitySet="TraceTransactions" />
+            <End Role="TraceDiscrepancies" EntitySet="TraceDiscrepancies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraceDocuments_Created_By" Association="financialdocumenttrackersystemModel.FK_TraceDocuments_Created_By">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="TraceDocuments" EntitySet="TraceDocuments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraceDocuments_Liasons" Association="financialdocumenttrackersystemModel.FK_TraceDocuments_Liasons">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="TraceDocuments" EntitySet="TraceDocuments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraceTransactions_TraceDocuments" Association="financialdocumenttrackersystemModel.FK_TraceTransactions_TraceDocuments">
+            <End Role="TraceDocuments" EntitySet="TraceDocuments" />
+            <End Role="TraceTransactions" EntitySet="TraceTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraceTransactions_Liason" Association="financialdocumenttrackersystemModel.FK_TraceTransactions_Liason">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="TraceTransactions" EntitySet="TraceTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraceTransactions_ReceivingPersonnel" Association="financialdocumenttrackersystemModel.FK_TraceTransactions_ReceivingPersonnel">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="TraceTransactions" EntitySet="TraceTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TraceTransactions_Users" Association="financialdocumenttrackersystemModel.FK_TraceTransactions_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="TraceTransactions" EntitySet="TraceTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserClaims_Users" Association="financialdocumenttrackersystemModel.FK_UserClaims_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserClaims" EntitySet="UserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserLogins_Users" Association="financialdocumenttrackersystemModel.FK_UserLogins_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserLogins" EntitySet="UserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="UsersInRoles" Association="financialdocumenttrackersystemModel.UsersInRoles">
+            <End Role="UserRoles" EntitySet="UserRoles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="AddressStateProvinces">
+          <Key>
+            <PropertyRef Name="StateProvinceId" />
+          </Key>
+          <Property Name="StateProvinceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="SortOrder" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AddressTownCities" Relationship="financialdocumenttrackersystemModel.FK_dbo_AddressTownCities_dbo_AddressStateProvinces_StateProvinceId" FromRole="AddressStateProvinces" ToRole="AddressTownCities" />
+        </EntityType>
+        <EntityType Name="AddressTownCities">
+          <Key>
+            <PropertyRef Name="TownCityId" />
+          </Key>
+          <Property Name="TownCityId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="StateProvinceId" Type="Int32" Nullable="false" />
+          <Property Name="SortOrder" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AddressStateProvinces" Relationship="financialdocumenttrackersystemModel.FK_dbo_AddressTownCities_dbo_AddressStateProvinces_StateProvinceId" FromRole="AddressTownCities" ToRole="AddressStateProvinces" />
+        </EntityType>
+        <EntityType Name="Departments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepartmentName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="DiscrepancyDescriptions" Relationship="financialdocumenttrackersystemModel.FK_DiscrepancyDescriptions_Departments" FromRole="Departments" ToRole="DiscrepancyDescriptions" />
+          <NavigationProperty Name="DocumentAttachments" Relationship="financialdocumenttrackersystemModel.FK_DocumentAttachments_Departments" FromRole="Departments" ToRole="DocumentAttachments" />
+          <NavigationProperty Name="TraceDocuments" Relationship="financialdocumenttrackersystemModel.FK_TraceDocuments_Requesting_Department" FromRole="Departments" ToRole="TraceDocuments" />
+          <NavigationProperty Name="TraceTransactions" Relationship="financialdocumenttrackersystemModel.FK_TraceTransactions_Departments" FromRole="Departments" ToRole="TraceTransactions" />
+          <NavigationProperty Name="Users" Relationship="financialdocumenttrackersystemModel.FK_Users_Departments" FromRole="Departments" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="DiscrepancyDescriptions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentId" Type="Int32" />
+          <NavigationProperty Name="Departments" Relationship="financialdocumenttrackersystemModel.FK_DiscrepancyDescriptions_Departments" FromRole="DiscrepancyDescriptions" ToRole="Departments" />
+          <NavigationProperty Name="TraceDiscrepancies" Relationship="financialdocumenttrackersystemModel.FK_TraceDiscrepancies_DiscrepancyDescriptions" FromRole="DiscrepancyDescriptions" ToRole="TraceDiscrepancies" />
+        </EntityType>
+        <EntityType Name="DocumentAttachments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AttachmentTitle" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentId" Type="Int32" />
+          <NavigationProperty Name="Departments" Relationship="financialdocumenttrackersystemModel.FK_DocumentAttachments_Departments" FromRole="DocumentAttachments" ToRole="Departments" />
+          <NavigationProperty Name="TraceDiscrepancies" Relationship="financialdocumenttrackersystemModel.FK_TraceDiscrepancies_DocumentAttachments" FromRole="DocumentAttachments" ToRole="TraceDiscrepancies" />
+          <NavigationProperty Name="TraceDocuments" Relationship="financialdocumenttrackersystemModel.FK_TraceDocuments_DocumentAttachments" FromRole="DocumentAttachments" ToRole="TraceDocuments" />
+        </EntityType>
+        <EntityType Name="RequestTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RequestType" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TraceDocuments" Relationship="financialdocumenttrackersystemModel.FK_TraceDocuments_RequestTypes" FromRole="RequestTypes" ToRole="TraceDocuments" />
+        </EntityType>
+        <EntityType Name="TraceDiscrepancies">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TraceTransactionId" Type="Int32" />
+          <Property Name="DocumentAttachmentId" Type="Int32" />
+          <Property Name="DiscrepancyDescriptionId" Type="Int32" />
+          <Property Name="DiscrepancyNotes" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DiscrepancyDescriptions" Relationship="financialdocumenttrackersystemModel.FK_TraceDiscrepancies_DiscrepancyDescriptions" FromRole="TraceDiscrepancies" ToRole="DiscrepancyDescriptions" />
+          <NavigationProperty Name="DocumentAttachments" Relationship="financialdocumenttrackersystemModel.FK_TraceDiscrepancies_DocumentAttachments" FromRole="TraceDiscrepancies" ToRole="DocumentAttachments" />
+          <NavigationProperty Name="TraceTransactions" Relationship="financialdocumenttrackersystemModel.FK_TraceDiscrepancies_TraceDiscrepancies" FromRole="TraceDiscrepancies" ToRole="TraceTransactions" />
+        </EntityType>
+        <EntityType Name="TraceDocuments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Barcode" Type="Int32" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="RequestTypeId" Type="Int32" />
+          <Property Name="CreatedById" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="DocumentAttachmentId" Type="Int32" />
+          <Property Name="Upload" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="LiasonId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RequestingDepartmentId" Type="Int32" />
+          <NavigationProperty Name="Departments" Relationship="financialdocumenttrackersystemModel.FK_TraceDocuments_Requesting_Department" FromRole="TraceDocuments" ToRole="Departments" />
+          <NavigationProperty Name="DocumentAttachments" Relationship="financialdocumenttrackersystemModel.FK_TraceDocuments_DocumentAttachments" FromRole="TraceDocuments" ToRole="DocumentAttachments" />
+          <NavigationProperty Name="RequestTypes" Relationship="financialdocumenttrackersystemModel.FK_TraceDocuments_RequestTypes" FromRole="TraceDocuments" ToRole="RequestTypes" />
+          <NavigationProperty Name="CreatedBy" Relationship="financialdocumenttrackersystemModel.FK_TraceDocuments_Created_By" FromRole="TraceDocuments" ToRole="Users" />
+          <NavigationProperty Name="Liasons" Relationship="financialdocumenttrackersystemModel.FK_TraceDocuments_Liasons" FromRole="TraceDocuments" ToRole="Users" />
+          <NavigationProperty Name="TraceTransactions" Relationship="financialdocumenttrackersystemModel.FK_TraceTransactions_TraceDocuments" FromRole="TraceDocuments" ToRole="TraceTransactions" />
+        </EntityType>
+        <EntityType Name="TraceTransactions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TraceDocumentId" Type="Int32" />
+          <Property Name="TraceDate" Type="DateTime" Precision="3" />
+          <Property Name="ReceivingPersonnelId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LiasonId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ReceivingDepartmentId" Type="Int32" />
+          <Property Name="CreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="isReceived" Type="Boolean" Nullable="false" />
+          <Property Name="isTransmit" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Departments" Relationship="financialdocumenttrackersystemModel.FK_TraceTransactions_Departments" FromRole="TraceTransactions" ToRole="Departments" />
+          <NavigationProperty Name="TraceDiscrepancies" Relationship="financialdocumenttrackersystemModel.FK_TraceDiscrepancies_TraceDiscrepancies" FromRole="TraceTransactions" ToRole="TraceDiscrepancies" />
+          <NavigationProperty Name="TraceDocuments" Relationship="financialdocumenttrackersystemModel.FK_TraceTransactions_TraceDocuments" FromRole="TraceTransactions" ToRole="TraceDocuments" />
+          <NavigationProperty Name="Liasons" Relationship="financialdocumenttrackersystemModel.FK_TraceTransactions_Liason" FromRole="TraceTransactions" ToRole="Users" />
+          <NavigationProperty Name="ReceivingPersonnels" Relationship="financialdocumenttrackersystemModel.FK_TraceTransactions_ReceivingPersonnel" FromRole="TraceTransactions" ToRole="Users" />
+          <NavigationProperty Name="CreatedByUsers" Relationship="financialdocumenttrackersystemModel.FK_TraceTransactions_Users" FromRole="TraceTransactions" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="UserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="financialdocumenttrackersystemModel.FK_UserClaims_Users" FromRole="UserClaims" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="UserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="financialdocumenttrackersystemModel.FK_UserLogins_Users" FromRole="UserLogins" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="UserRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="financialdocumenttrackersystemModel.UsersInRoles" FromRole="UserRoles" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeId" Type="Int32" />
+          <Property Name="DepartmentId" Type="Int32" />
+          <Property Name="BiometricId" Type="Int32" />
+          <Property Name="Email" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" />
+          <Property Name="AccessFailedCount" Type="Int32" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastUpdatedBy" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="LastUpdated" Type="DateTime" Precision="3" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CivilStatus" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="BirthDate" Type="DateTime" Precision="3" />
+          <Property Name="AddressLine2" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine1" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="TownCityId" Type="Int32" />
+          <Property Name="Cellular" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="Height" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="Weight" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="Religion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Citizenship" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Languages" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Departments" Relationship="financialdocumenttrackersystemModel.FK_Users_Departments" FromRole="Users" ToRole="Departments" />
+          <NavigationProperty Name="TraceDocuments_CreatedBy" Relationship="financialdocumenttrackersystemModel.FK_TraceDocuments_Created_By" FromRole="Users" ToRole="TraceDocuments" />
+          <NavigationProperty Name="TraceDocuments_Liasons" Relationship="financialdocumenttrackersystemModel.FK_TraceDocuments_Liasons" FromRole="Users" ToRole="TraceDocuments" />
+          <NavigationProperty Name="TraceTransactions_Liason" Relationship="financialdocumenttrackersystemModel.FK_TraceTransactions_Liason" FromRole="Users" ToRole="TraceTransactions" />
+          <NavigationProperty Name="TraceTransactions_ReceivingPersonnel" Relationship="financialdocumenttrackersystemModel.FK_TraceTransactions_ReceivingPersonnel" FromRole="Users" ToRole="TraceTransactions" />
+          <NavigationProperty Name="TraceTransactions_Created_By" Relationship="financialdocumenttrackersystemModel.FK_TraceTransactions_Users" FromRole="Users" ToRole="TraceTransactions" />
+          <NavigationProperty Name="UserClaims" Relationship="financialdocumenttrackersystemModel.FK_UserClaims_Users" FromRole="Users" ToRole="UserClaims" />
+          <NavigationProperty Name="UserLogins" Relationship="financialdocumenttrackersystemModel.FK_UserLogins_Users" FromRole="Users" ToRole="UserLogins" />
+          <NavigationProperty Name="UserRoles" Relationship="financialdocumenttrackersystemModel.UsersInRoles" FromRole="Users" ToRole="UserRoles" />
+        </EntityType>
+        <Association Name="FK_dbo_AddressTownCities_dbo_AddressStateProvinces_StateProvinceId">
+          <End Type="financialdocumenttrackersystemModel.AddressStateProvinces" Role="AddressStateProvinces" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="financialdocumenttrackersystemModel.AddressTownCities" Role="AddressTownCities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AddressStateProvinces">
+              <PropertyRef Name="StateProvinceId" />
+            </Principal>
+            <Dependent Role="AddressTownCities">
+              <PropertyRef Name="StateProvinceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DiscrepancyDescriptions_Departments">
+          <End Type="financialdocumenttrackersystemModel.Departments" Role="Departments" Multiplicity="0..1" />
+          <End Type="financialdocumenttrackersystemModel.DiscrepancyDescriptions" Role="DiscrepancyDescriptions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DiscrepancyDescriptions">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DocumentAttachments_Departments">
+          <End Type="financialdocumenttrackersystemModel.Departments" Role="Departments" Multiplicity="0..1" />
+          <End Type="financialdocumenttrackersystemModel.DocumentAttachments" Role="DocumentAttachments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DocumentAttachments">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TraceDocuments_Requesting_Department">
+          <End Type="financialdocumenttrackersystemModel.Departments" Role="Departments" Multiplicity="0..1" />
+          <End Type="financialdocumenttrackersystemModel.TraceDocuments" Role="TraceDocuments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TraceDocuments">
+              <PropertyRef Name="RequestingDepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TraceTransactions_Departments">
+          <End Type="financialdocumenttrackersystemModel.Departments" Role="Departments" Multiplicity="0..1" />
+          <End Type="financialdocumenttrackersystemModel.TraceTransactions" Role="TraceTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TraceTransactions">
+              <PropertyRef Name="ReceivingDepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Departments">
+          <End Type="financialdocumenttrackersystemModel.Departments" Role="Departments" Multiplicity="0..1" />
+          <End Type="financialdocumenttrackersystemModel.Users" Role="Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TraceDiscrepancies_DiscrepancyDescriptions">
+          <End Type="financialdocumenttrackersystemModel.DiscrepancyDescriptions" Role="DiscrepancyDescriptions" Multiplicity="0..1" />
+          <End Type="financialdocumenttrackersystemModel.TraceDiscrepancies" Role="TraceDiscrepancies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DiscrepancyDescriptions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TraceDiscrepancies">
+              <PropertyRef Name="DiscrepancyDescriptionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TraceDiscrepancies_DocumentAttachments">
+          <End Type="financialdocumenttrackersystemModel.DocumentAttachments" Role="DocumentAttachments" Multiplicity="0..1" />
+          <End Type="financialdocumenttrackersystemModel.TraceDiscrepancies" Role="TraceDiscrepancies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocumentAttachments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TraceDiscrepancies">
+              <PropertyRef Name="DocumentAttachmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TraceDocuments_DocumentAttachments">
+          <End Type="financialdocumenttrackersystemModel.DocumentAttachments" Role="DocumentAttachments" Multiplicity="0..1" />
+          <End Type="financialdocumenttrackersystemModel.TraceDocuments" Role="TraceDocuments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocumentAttachments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TraceDocuments">
+              <PropertyRef Name="DocumentAttachmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TraceDocuments_RequestTypes">
+          <End Type="financialdocumenttrackersystemModel.RequestTypes" Role="RequestTypes" Multiplicity="0..1" />
+          <End Type="financialdocumenttrackersystemModel.TraceDocuments" Role="TraceDocuments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RequestTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TraceDocuments">
+              <PropertyRef Name="RequestTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TraceDiscrepancies_TraceDiscrepancies">
+          <End Type="financialdocumenttrackersystemModel.TraceTransactions" Role="TraceTransactions" Multiplicity="0..1" />
+          <End Type="financialdocumenttrackersystemModel.TraceDiscrepancies" Role="TraceDiscrepancies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TraceTransactions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TraceDiscrepancies">
+              <PropertyRef Name="TraceTransactionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TraceDocuments_Created_By">
+          <End Type="financialdocumenttrackersystemModel.Users" Role="Users" Multiplicity="0..1" />
+          <End Type="financialdocumenttrackersystemModel.TraceDocuments" Role="TraceDocuments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TraceDocuments">
+              <PropertyRef Name="CreatedById" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TraceDocuments_Liasons">
+          <End Type="financialdocumenttrackersystemModel.Users" Role="Users" Multiplicity="0..1" />
+          <End Type="financialdocumenttrackersystemModel.TraceDocuments" Role="TraceDocuments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TraceDocuments">
+              <PropertyRef Name="LiasonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TraceTransactions_TraceDocuments">
+          <End Type="financialdocumenttrackersystemModel.TraceDocuments" Role="TraceDocuments" Multiplicity="0..1" />
+          <End Type="financialdocumenttrackersystemModel.TraceTransactions" Role="TraceTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TraceDocuments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TraceTransactions">
+              <PropertyRef Name="TraceDocumentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TraceTransactions_Liason">
+          <End Type="financialdocumenttrackersystemModel.Users" Role="Users" Multiplicity="0..1" />
+          <End Type="financialdocumenttrackersystemModel.TraceTransactions" Role="TraceTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TraceTransactions">
+              <PropertyRef Name="LiasonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TraceTransactions_ReceivingPersonnel">
+          <End Type="financialdocumenttrackersystemModel.Users" Role="Users" Multiplicity="0..1" />
+          <End Type="financialdocumenttrackersystemModel.TraceTransactions" Role="TraceTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TraceTransactions">
+              <PropertyRef Name="ReceivingPersonnelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TraceTransactions_Users">
+          <End Type="financialdocumenttrackersystemModel.Users" Role="Users" Multiplicity="0..1" />
+          <End Type="financialdocumenttrackersystemModel.TraceTransactions" Role="TraceTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TraceTransactions">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserClaims_Users">
+          <End Type="financialdocumenttrackersystemModel.Users" Role="Users" Multiplicity="1" />
+          <End Type="financialdocumenttrackersystemModel.UserClaims" Role="UserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserLogins_Users">
+          <End Type="financialdocumenttrackersystemModel.Users" Role="Users" Multiplicity="1" />
+          <End Type="financialdocumenttrackersystemModel.UserLogins" Role="UserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UsersInRoles">
+          <End Type="financialdocumenttrackersystemModel.UserRoles" Role="UserRoles" Multiplicity="*" />
+          <End Type="financialdocumenttrackersystemModel.Users" Role="Users" Multiplicity="*" />
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="financialdocumenttrackersystemModelStoreContainer" CdmEntityContainer="FinancialdocumenttrackersystemEntities">
+          <EntitySetMapping Name="AddressStateProvinces">
+            <EntityTypeMapping TypeName="financialdocumenttrackersystemModel.AddressStateProvinces">
+              <MappingFragment StoreEntitySet="AddressStateProvinces">
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="StateProvinceId" ColumnName="StateProvinceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AddressTownCities">
+            <EntityTypeMapping TypeName="financialdocumenttrackersystemModel.AddressTownCities">
+              <MappingFragment StoreEntitySet="AddressTownCities">
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="StateProvinceId" ColumnName="StateProvinceId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TownCityId" ColumnName="TownCityId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Departments">
+            <EntityTypeMapping TypeName="financialdocumenttrackersystemModel.Departments">
+              <MappingFragment StoreEntitySet="Departments">
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DiscrepancyDescriptions">
+            <EntityTypeMapping TypeName="financialdocumenttrackersystemModel.DiscrepancyDescriptions">
+              <MappingFragment StoreEntitySet="DiscrepancyDescriptions">
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DocumentAttachments">
+            <EntityTypeMapping TypeName="financialdocumenttrackersystemModel.DocumentAttachments">
+              <MappingFragment StoreEntitySet="DocumentAttachments">
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="AttachmentTitle" ColumnName="AttachmentTitle" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RequestTypes">
+            <EntityTypeMapping TypeName="financialdocumenttrackersystemModel.RequestTypes">
+              <MappingFragment StoreEntitySet="RequestTypes">
+                <ScalarProperty Name="RequestType" ColumnName="RequestType" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TraceDiscrepancies">
+            <EntityTypeMapping TypeName="financialdocumenttrackersystemModel.TraceDiscrepancies">
+              <MappingFragment StoreEntitySet="TraceDiscrepancies">
+                <ScalarProperty Name="DiscrepancyNotes" ColumnName="DiscrepancyNotes" />
+                <ScalarProperty Name="DiscrepancyDescriptionId" ColumnName="DiscrepancyDescriptionId" />
+                <ScalarProperty Name="DocumentAttachmentId" ColumnName="DocumentAttachmentId" />
+                <ScalarProperty Name="TraceTransactionId" ColumnName="TraceTransactionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TraceDocuments">
+            <EntityTypeMapping TypeName="financialdocumenttrackersystemModel.TraceDocuments">
+              <MappingFragment StoreEntitySet="TraceDocuments">
+                <ScalarProperty Name="RequestingDepartmentId" ColumnName="RequestingDepartmentId" />
+                <ScalarProperty Name="LiasonId" ColumnName="LiasonId" />
+                <ScalarProperty Name="Upload" ColumnName="Upload" />
+                <ScalarProperty Name="DocumentAttachmentId" ColumnName="DocumentAttachmentId" />
+                <ScalarProperty Name="CreatedById" ColumnName="CreatedById" />
+                <ScalarProperty Name="RequestTypeId" ColumnName="RequestTypeId" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TraceTransactions">
+            <EntityTypeMapping TypeName="financialdocumenttrackersystemModel.TraceTransactions">
+              <MappingFragment StoreEntitySet="TraceTransactions">
+                <ScalarProperty Name="isTransmit" ColumnName="isTransmit" />
+                <ScalarProperty Name="isReceived" ColumnName="isReceived" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ReceivingDepartmentId" ColumnName="ReceivingDepartmentId" />
+                <ScalarProperty Name="LiasonId" ColumnName="LiasonId" />
+                <ScalarProperty Name="ReceivingPersonnelId" ColumnName="ReceivingPersonnelId" />
+                <ScalarProperty Name="TraceDate" ColumnName="TraceDate" />
+                <ScalarProperty Name="TraceDocumentId" ColumnName="TraceDocumentId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserClaims">
+            <EntityTypeMapping TypeName="financialdocumenttrackersystemModel.UserClaims">
+              <MappingFragment StoreEntitySet="UserClaims">
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserLogins">
+            <EntityTypeMapping TypeName="financialdocumenttrackersystemModel.UserLogins">
+              <MappingFragment StoreEntitySet="UserLogins">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRoles">
+            <EntityTypeMapping TypeName="financialdocumenttrackersystemModel.UserRoles">
+              <MappingFragment StoreEntitySet="UserRoles">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="financialdocumenttrackersystemModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="Languages" ColumnName="Languages" />
+                <ScalarProperty Name="Citizenship" ColumnName="Citizenship" />
+                <ScalarProperty Name="Religion" ColumnName="Religion" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Height" ColumnName="Height" />
+                <ScalarProperty Name="Cellular" ColumnName="Cellular" />
+                <ScalarProperty Name="TownCityId" ColumnName="TownCityId" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="CivilStatus" ColumnName="CivilStatus" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="BiometricId" ColumnName="BiometricId" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="UsersInRoles" TypeName="financialdocumenttrackersystemModel.UsersInRoles" StoreEntitySet="UsersInRoles">
+            <EndProperty Name="Users">
+              <ScalarProperty Name="Id" ColumnName="Users_Id" />
+            </EndProperty>
+            <EndProperty Name="UserRoles">
+              <ScalarProperty Name="Id" ColumnName="UserRoles_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>
+        @if (!string.IsNullOrWhiteSpace(ViewBag.Title))
+        {
+            @ViewBag.Title@: -
+        }
+        FDTS
+    </title>
+    @Styles.Render("~/bundles/css")
+
+    @Scripts.Render("~/bundles/modernizr")
+
+    @Scripts.Render("~/bundles/jquery")
+
+    <script src="~/Content/js/custom-js.js"></script>
+
+    @{
+        Html.DevExpress().GetStyleSheets(
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.PivotGrid },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Report },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.CardView },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.HtmlEditor },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.RichEdit },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Scheduler }
+
+            );
+
+        Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.PivotGrid },
+            new Script { ExtensionSuite = ExtensionSuite.Report },
+            new Script { ExtensionSuite = ExtensionSuite.GridView },
+            new Script { ExtensionSuite = ExtensionSuite.CardView },
+            new Script { ExtensionSuite = ExtensionSuite.RichEdit },
+            new Script { ExtensionSuite = ExtensionSuite.HtmlEditor },
+            new Script { ExtensionSuite = ExtensionSuite.Scheduler }
+
+            );
+      
+    }
+    @Scripts.Render("~/bundles/js")
+
+</head>
+<body class="hold-transition skin-red sidebar-mini">
+    <div class="wrapper">
+        @Html.Partial("_Header")
+        @Html.Partial("_Sidebar")
+
+
+        <div class="content-wrapper">
+            <section class="content-header">
+                @*<h2><i class="fa fa-map-marker"></i> LOCATIONS <span>Data Management</span></h2>*@
+                <h1>
+                    @ViewBag.Title
+                    <small>@ViewBag.Description</small>
+                    @*<small>@ViewBag.Description</small>*@
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="#">FDTS</a></li>
+                    <li class="active">@ViewBag.Title</li>
+                </ol>
+            </section>
+
+            <section class="content">
+                @RenderBody()
+            </section>
+        </div>
+
+
+    </div>
+    @if (User.IsInRole("Applicant"))
+    {
+        <script src="//code.tidio.co/rjyraptzwlxborjgke1xbnbhxad7rxdz.js"></script>
+    }
+    @{
+        Html.DevExpress().LoadingPanel(ldp =>
+        {
+            ldp.Name = "ldpLoading";
+            
+        }).GetHtml();
+    }
+    @RenderSection("scripts", required: false)
+
+
+
+
+</body>
+</html>
+<script>
+    function showldpLoading() {
+        ldpLoading.Show();
+    }
+    function hideldpLoading() {
+        ldpLoading.Hide();
+    }
+</script>
+
+<script>
+   
+</script>

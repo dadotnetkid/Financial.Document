@@ -1,0 +1,29 @@
+﻿@model AddressTownCities
+@{
+    Html.DevExpress().ComboBox(cbo =>
+    {
+
+        cbo.Name = ViewBag.cboName ??"TownCity";
+
+
+        cbo.Properties.Caption = ViewBag.caption;
+        cbo.Properties.CaptionSettings.Position = EditorCaptionPosition.Top;
+
+        cbo.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        cbo.ShowModelErrors = true;
+        cbo.Properties.ValidationSettings.Display = Display.Dynamic;
+        cbo.CallbackRouteValues = new { Controller = "Maintenance", Action = "SelectTownCityPartial", TownCityId = Model.TownCityId };
+        cbo.Properties.ValueField = "TownCityId";
+        cbo.Properties.TextField = "Name";
+        cbo.Properties.ValueType = typeof(int);
+        cbo.Properties.CallbackPageSize = 10;
+        cbo.Properties.DropDownStyle = DropDownStyle.DropDownList;
+        cbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        cbo.PreRender = (s, e) =>
+        {
+            MVCxComboBox combo = s as MVCxComboBox;
+            if (Model.TownCityId != 0)
+                combo.Value = Model.TownCityId;
+        };
+    }).BindList(ViewBag.AddressTownCities).GetHtml();
+}

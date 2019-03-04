@@ -1,0 +1,57 @@
+@using FDTS.Models.ViewModels
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = $"TraceTransactionGridView_{ViewBag.TraceDocumentId}";
+
+        settings.Width = Unit.Percentage(100);
+
+        settings.SettingsDetail.MasterGridName = "TraceDocumentGridView";
+        settings.CallbackRouteValues = new { Controller = "TraceTransaction", Action = "TraceTransactionGridViewPartial", TraceDocumentId = ViewBag.TraceDocumentId };
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "TraceTransaction", Action = "TraceTransactionGridViewPartialAddNew", TraceDocumentId = ViewBag.TraceDocumentId };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "TraceTransaction", Action = "TraceTransactionGridViewPartialUpdate", TraceDocumentId = ViewBag.TraceDocumentId };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "TraceTransaction", Action = "TraceTransactionGridViewPartialDelete", TraceDocumentId = ViewBag.TraceDocumentId };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.CommandColumn.Visible = false;
+        settings.CommandColumn.ShowNewButtonInHeader = false;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+
+        settings.KeyFieldName = "Id";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+
+        settings.Columns.Add("TraceDate").SortOrder=DevExpress.Data.ColumnSortOrder.Descending;
+        settings.Columns.Add("LiasonName");
+
+        settings.Columns.Add("Liason.Departments.DepartmentName").Caption = "Liason Department";
+        settings.Columns.Add("ReceivingPersonnelName");
+        settings.Columns.Add("Departments.DepartmentName").Caption = "Receiving Department";
+        settings.SettingsDetail.AllowOnlyOneMasterRowExpanded = false;
+        settings.SettingsDetail.ShowDetailRow = true;
+
+        settings.SetDetailRowTemplateContent(col =>
+        {
+            ViewContext.Writer.Write("<h4>Discrepancies</h4>");
+            Html.RenderAction("TraceDiscrepancyGridViewPartial", "TraceDiscrepancy", new { TraceTransactionId = col.KeyValue, MasterGridName = $"TraceTransactionGridView_{ViewBag.TraceDocumentId}" });
+        });
+    });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

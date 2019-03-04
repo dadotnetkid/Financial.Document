@@ -1,0 +1,33 @@
+﻿@model TraceTransactions
+
+
+<div class="row ">
+    <div class="col-lg-12">
+        @{
+            Html.DevExpress().TextBoxFor(m => m.ReceivingPersonnelId, settings =>
+               {
+                   settings.Width = Unit.Percentage(100);
+                   settings.Properties.Caption = "Receiving Personnel Id";
+                   settings.Properties.CaptionSettings.Position = EditorCaptionPosition.Top;
+                   settings.Properties.ClientSideEvents.TextChanged = "function(s,e){EnableBtnSubmitModal(s,e)}";
+                   settings.Properties.ClientSideEvents.KeyUp = "function(s,e){EnableBtnSubmitModal(s,e)}";
+
+               }).GetHtml();
+        }
+    </div>
+</div>
+
+
+<div class="row margin-top-10">
+    <div class="col-lg-12">
+        @{
+            Html.DevExpress().Button(settings =>
+            {
+                settings.Name = "btnSubmitModal";
+                settings.ClientEnabled = false;
+                settings.Text = "Submit";
+                settings.ClientSideEvents.Click = "function(s,e){LiasonPerformCallback(ReceivingPersonnelId.GetValue()," + Model?.Id + ")}";
+            }).GetHtml();
+        }
+    </div>
+</div>

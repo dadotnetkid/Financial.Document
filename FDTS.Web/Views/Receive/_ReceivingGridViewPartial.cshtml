@@ -1,0 +1,107 @@
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+
+        settings.Width = Unit.Percentage(100);
+
+
+
+
+        settings.Name = "ReceiveGridView";
+        settings.CallbackRouteValues = new { Controller = "Receive", Action = "ReceivingGridViewPartial" };
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Receive", Action = "ReceivingGridViewPartialAddNew" };
+        //settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Receive", Action = "TransmitGridViewPartialUpdate" };
+        //settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Receive", Action = "TransmitGridViewPartialDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.CommandColumn.Visible = false;
+        settings.CommandColumn.ShowNewButtonInHeader = true;
+        settings.CommandColumn.ShowDeleteButton = false;
+        settings.CommandColumn.ShowEditButton = false;
+
+        settings.KeyFieldName = "Id";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 350;
+
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "TraceDocumentId";
+            col.PropertiesEdit.DisplayFormatString = "D11";
+            col.Caption = "Barcode Number";
+            col.SortDescending();
+        });
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "ReceivingPersonnels.FullName";
+            col.Caption = "Receiving Personnels";
+        });
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "Departments.DepartmentName";
+            col.Caption = "Receiving Department";
+        });
+        settings.Columns.Add("TraceDate");
+
+        settings.Columns.Add("ReceiveStatus");
+        settings.Columns.Add(col =>
+        {
+
+
+            col.SetDataItemTemplateContent(content =>
+            {
+
+                var Id = Convert.ToInt32(content.KeyValue);
+                var trace=new UnitOfWork().TraceTransactionsRepo.Find(m => m.Id == Id);
+                if (trace.ReceivingPersonnelId == null)
+                {
+                    Html.DevExpress().Button(btn =>
+                    {
+                        btn.Name = $"btnReceive{content.KeyValue}";
+                        btn.Text = "Receive";
+                        btn.ClientSideEvents.Click = "function(s,e){receiveTraceTransactionCallback(" + content.KeyValue + ")}";
+                    }).GetHtml();
+                }
+
+            });
+        });
+        settings.SetEditFormTemplateContent(col =>
+        {
+
+            Html.RenderAction("AddEditReceivePartial");
+        });
+        settings.SettingsDetail.AllowOnlyOneMasterRowExpanded = false;
+        settings.SettingsDetail.ShowDetailRow = true;
+
+        settings.SetDetailRowTemplateContent(col =>
+        {
+            /*
+     *  var id = Convert.ToInt32(col.KeyValue);
+     var traceTransaction = new UnitOfWork().TraceTransactionsRepo.Find(m => m.Id == id);
+     if (traceTransaction.TraceDocuments.Users.DepartmentId == User.Identity.GetDepartmentId())
+     {
+
+         Html.RenderAction("TraceDiscrepancyGridViewPartial", "TraceDiscrepancy", new { TraceTransactionId = col.KeyValue, MasterGridName = $"TransmitGridView" });
+     }
+     */
+            ViewContext.Writer.Write("<h4>Discrepancies</h4>");
+            Html.RenderAction("TraceDiscrepancyGridViewPartial", "TraceDiscrepancy", new { TraceTransactionId = col.KeyValue, MasterGridName = $"ReceiveGridView" });
+        });
+
+    });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Documents";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Action("TraceDocumentGridViewPartial")
+
+
+@Html.Action("PrintTraceDocumentPartial")
+<script>
+    function generateTraceDocumentId() {
+        TraceDocumentGridView.PerformCallback({ isGenerateNewDocumentId: true });
+    }
+
+    function PrintTraceDocument(keyValue) {
+        PrintTraceDocumentPartial.PerformCallback({ traceDocumentId: keyValue });
+    }
+</script>

@@ -1,0 +1,26 @@
+﻿
+@model RequestTypes
+
+@{
+    IQueryable<RequestTypes> model = ViewBag.RequestTypes;
+}
+@{
+    Html.DevExpress().ComboBoxFor(m => m.Id, settings =>
+    {
+        settings.Width = Unit.Percentage(100);
+        settings.Name = ViewBag.cboName ?? "RequestTypeId";
+        settings.Properties.TextField = "RequestType";
+        settings.Properties.ValueField = "Id";
+
+        settings.CallbackRouteValues = new { Controller = "Partials", Action = "cboRequestTypePartial", cboName = ViewBag.cboName };
+        settings.Properties.CallbackPageSize = 10;
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+
+        settings.Properties.Caption = ViewBag.caption;
+        settings.Properties.CaptionSettings.Position = EditorCaptionPosition.Top;
+
+    }).BindList(args => model.GetRange(args, m => m.RequestType.Contains(args.Filter)), args => Model.Id)
+        .GetHtml();
+}
+
+

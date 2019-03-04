@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3e9a12383c004bdbb33c9d21e2ca6037" Name="Diagram1">
+        <EntityTypeShape EntityType="financialdocumenttrackersystemModel.AddressStateProvinces" Width="1.5" PointX="5.75" PointY="1" />
+        <EntityTypeShape EntityType="financialdocumenttrackersystemModel.AddressTownCities" Width="1.5" PointX="8" PointY="0.875" />
+        <EntityTypeShape EntityType="financialdocumenttrackersystemModel.Departments" Width="1.5" PointX="0.75" PointY="8.875" />
+        <EntityTypeShape EntityType="financialdocumenttrackersystemModel.DiscrepancyDescriptions" Width="1.5" PointX="3" PointY="20.875" />
+        <EntityTypeShape EntityType="financialdocumenttrackersystemModel.DocumentAttachments" Width="1.5" PointX="3" PointY="17.875" />
+        <EntityTypeShape EntityType="financialdocumenttrackersystemModel.RequestTypes" Width="1.5" PointX="3" PointY="3.125" />
+        <EntityTypeShape EntityType="financialdocumenttrackersystemModel.TraceDiscrepancies" Width="1.5" PointX="5.25" PointY="19.125" />
+        <EntityTypeShape EntityType="financialdocumenttrackersystemModel.TraceDocuments" Width="1.5" PointX="5.25" PointY="10.875" />
+        <EntityTypeShape EntityType="financialdocumenttrackersystemModel.TraceTransactions" Width="1.5" PointX="7.5" PointY="8.375" />
+        <EntityTypeShape EntityType="financialdocumenttrackersystemModel.UserClaims" Width="1.5" PointX="5.25" PointY="15.625" />
+        <EntityTypeShape EntityType="financialdocumenttrackersystemModel.UserLogins" Width="1.5" PointX="5.25" PointY="8" />
+        <EntityTypeShape EntityType="financialdocumenttrackersystemModel.UserRoles" Width="1.5" PointX="0.75" PointY="5.375" />
+        <EntityTypeShape EntityType="financialdocumenttrackersystemModel.Users" Width="1.5" PointX="3" PointY="5.625" />
+        <AssociationConnector Association="financialdocumenttrackersystemModel.FK_dbo_AddressTownCities_dbo_AddressStateProvinces_StateProvinceId" />
+        <AssociationConnector Association="financialdocumenttrackersystemModel.FK_DiscrepancyDescriptions_Departments" />
+        <AssociationConnector Association="financialdocumenttrackersystemModel.FK_DocumentAttachments_Departments" />
+        <AssociationConnector Association="financialdocumenttrackersystemModel.FK_TraceDocuments_Requesting_Department" />
+        <AssociationConnector Association="financialdocumenttrackersystemModel.FK_TraceTransactions_Departments" />
+        <AssociationConnector Association="financialdocumenttrackersystemModel.FK_Users_Departments" />
+        <AssociationConnector Association="financialdocumenttrackersystemModel.FK_TraceDiscrepancies_DiscrepancyDescriptions" />
+        <AssociationConnector Association="financialdocumenttrackersystemModel.FK_TraceDiscrepancies_DocumentAttachments" />
+        <AssociationConnector Association="financialdocumenttrackersystemModel.FK_TraceDocuments_DocumentAttachments" />
+        <AssociationConnector Association="financialdocumenttrackersystemModel.FK_TraceDocuments_RequestTypes" />
+        <AssociationConnector Association="financialdocumenttrackersystemModel.FK_TraceDiscrepancies_TraceDiscrepancies" />
+        <AssociationConnector Association="financialdocumenttrackersystemModel.FK_TraceDocuments_Created_By" />
+        <AssociationConnector Association="financialdocumenttrackersystemModel.FK_TraceDocuments_Liasons" />
+        <AssociationConnector Association="financialdocumenttrackersystemModel.FK_TraceTransactions_TraceDocuments" />
+        <AssociationConnector Association="financialdocumenttrackersystemModel.FK_TraceTransactions_Liason" />
+        <AssociationConnector Association="financialdocumenttrackersystemModel.FK_TraceTransactions_ReceivingPersonnel" />
+        <AssociationConnector Association="financialdocumenttrackersystemModel.FK_TraceTransactions_Users" />
+        <AssociationConnector Association="financialdocumenttrackersystemModel.FK_UserClaims_Users" />
+        <AssociationConnector Association="financialdocumenttrackersystemModel.FK_UserLogins_Users" />
+        <AssociationConnector Association="financialdocumenttrackersystemModel.UsersInRoles" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

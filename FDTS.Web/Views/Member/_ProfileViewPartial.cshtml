@@ -1,0 +1,245 @@
+﻿@model Users
+
+@{
+
+
+
+    if (Model.Id == User.Identity.GetUserId())
+    {
+        Html.DevExpress().Button(m =>
+        {
+            m.Text = "Update";
+            m.ClientSideEvents.Click = "function(s,e){Update()}";
+            m.Name = "btnSubmit";
+            m.UseSubmitBehavior = true;
+        }).GetHtml();
+    }
+    <div class="row margin-top-5">
+        <div class="col-lg-6">
+            <label>Email</label>
+            @{
+                Html.DevExpress().TextBoxFor(m => m.Email, txt =>
+                {
+                    txt.Width = Unit.Percentage(100);
+                    txt.Properties.NullText = "Email";
+                }).GetHtml();
+            }
+        </div>
+        <div class="col-lg-6">
+            <label>Username</label>
+            @{
+                Html.DevExpress().TextBoxFor(m => m.UserName, txt =>
+                {
+                    txt.Width = Unit.Percentage(100);
+                    txt.Properties.NullText = "UserName";
+                }).GetHtml();
+            }
+        </div>
+    </div>
+
+    <div class="row margin-top-5">
+        <div class="col-lg-6">
+            <label>Password(Leave if you dont want to change)</label>
+            @{
+                Html.DevExpress().TextBoxFor(m => m.Password, txt =>
+                {
+                    txt.Width = Unit.Percentage(100);
+                    txt.Properties.NullText = "Password";
+                }).GetHtml();
+            }
+        </div>
+        <div class="col-lg-6">
+            <label>First Name</label>
+            @{
+                Html.DevExpress().TextBoxFor(m => m.FirstName, txt =>
+                {
+                    txt.Width = Unit.Percentage(100);
+                    txt.Properties.NullText = "First Name";
+                }).GetHtml();
+            }
+        </div>
+
+    </div>
+    <div class="row margin-top-5">
+        <div class="col-lg-6">
+            <label>Middle Name</label>
+            @{
+                Html.DevExpress().TextBoxFor(m => m.MiddleName, txt =>
+                {
+                    txt.Width = Unit.Percentage(100);
+                    txt.Properties.NullText = "Middle Name";
+                }).GetHtml();
+            }
+        </div>
+        <div class="col-lg-6">
+            <label>Last Name</label>
+            @{
+                Html.DevExpress().TextBoxFor(m => m.LastName, txt =>
+                {
+                    txt.Width = Unit.Percentage(100);
+                    txt.Properties.NullText = "Last Name";
+                }).GetHtml();
+            }
+        </div>
+
+    </div>
+    <div class="row margin-top-5">
+        <div class="col-lg-6">
+            <label>Middle Name</label>
+            @{
+                Html.DevExpress().ComboBoxFor(m => m.CivilStatus, cbo =>
+                {
+                    cbo.Width = Unit.Percentage(100);
+                    cbo.Properties.NullText = "Civil Status";
+                    cbo.Properties.ValueField = "Id";
+                    cbo.Properties.TextField = "Name";
+                }).BindList(Enum.GetValues(typeof(CivilStatus)).Cast<CivilStatus>().Select(x => new { Id = x, Name = x.ToString() })).GetHtml();
+            }
+        </div>
+        <div class="col-lg-6">
+            <label>Gender</label>
+            @{
+                Html.DevExpress().ComboBoxFor(m => m.Gender, cbo =>
+                {
+                    cbo.Width = Unit.Percentage(100);
+                    cbo.Properties.NullText = "Gender";
+                    cbo.Properties.ValueField = "Id";
+                    cbo.Properties.TextField = "Name";
+                }).BindList(Enum.GetValues(typeof(Gender)).Cast<Gender>().Select(x => new { Id = x, Name = x.ToString() })).GetHtml();
+            }
+        </div>
+
+    </div>
+    <div class="row margin-top-5">
+        <div class="col-lg-6">
+            <label>BirthDate</label>
+            @{
+                Html.DevExpress().DateEditFor(m => m.BirthDate, dt =>
+                {
+                    dt.Width = Unit.Percentage(100);
+                }).GetHtml();
+            }
+        </div>
+        <div class="col-lg-6">
+            <label>Address Line 1</label>
+            @{
+                Html.DevExpress().TextBoxFor(m => m.AddressLine1, txt =>
+                {
+                    txt.Width = Unit.Percentage(100);
+
+                }).GetHtml();
+            }
+        </div>
+
+    </div>
+    <div class="row margin-top-5">
+        <div class="col-lg-6">
+            <label>Address Line 2</label>
+            @{
+                Html.DevExpress().TextBoxFor(m => m.AddressLine2, txt =>
+                {
+                    txt.Width = Unit.Percentage(100);
+                }).GetHtml();
+            }
+        </div>
+        <div class="col-lg-6">
+            <label>Town City</label>
+            @{
+                Html.DevExpress().ComboBoxFor(m => m.TownCity, cbo =>
+                {
+                    cbo.Width = Unit.Percentage(100);
+                    cbo.Properties.ValueField = "TownCityId";
+                    cbo.Properties.TextField = "Name";
+                }).BindList(new UnitOfWork().TownCityRepo.Get()).GetHtml();
+            }
+        </div>
+
+    </div>
+    
+    <div class="row margin-top-5">
+        <div class="col-lg-6">
+            <label>Cellular</label>
+            @{
+                Html.DevExpress().TextBoxFor(m => m.Cellular, txt =>
+                {
+                    txt.Width = Unit.Percentage(100);
+                }).GetHtml();
+            }
+        </div>
+        <div class="col-lg-6">
+            <label>Religion</label>
+            @{
+                Html.DevExpress().ComboBoxFor(m => m.Religion, cbo =>
+                {
+                    cbo.Width = Unit.Percentage(100);
+
+                }).GetHtml();
+            }
+        </div>
+
+    </div>
+    <div class="row margin-top-5">
+        <div class="col-lg-6">
+            <label>Citizen</label>
+            @{
+                Html.DevExpress().TextBoxFor(m => m.Citizenship, txt =>
+                {
+                    txt.Width = Unit.Percentage(100);
+                }).GetHtml();
+            }
+        </div>
+        @*<div class="col-lg-6">
+            <label>Roles</label>
+            @{
+                Html.DevExpress().ComboBoxFor(m => m.userRole, cbo =>
+                {
+                    cbo.Width = Unit.Percentage(100);
+
+                }).BindList().GetHtml();
+            }
+        </div>*@
+
+    </div>
+  
+
+
+
+
+}
+
+<script>
+
+    function PrepareValidationScripts() {
+        var form = $('#form-profile');
+        if (form.executed)
+            return;
+
+        form.removeData("validator");
+        $.validator.unobtrusive.parse('#form-profile');
+        form.executed = true;
+    }
+
+
+    function InitializeValidationRulesForForm() {
+        var form = $('#form-profile');
+        if (form.attr("executed"))
+            return;
+        form.removeData("validator");
+        $.validator.unobtrusive.parse('#form-profile');
+        form.executed = true;
+    }
+    function IsValidForm() {
+        InitializeValidationRulesForForm();
+        var validator = $.data($('#form-profile')[0], 'validator');
+        return validator.form();
+    }
+    function Update() {
+        //$.validator.unobtrusive.parse('#form-profile');
+
+        /// var form = $('#form-profile');
+        // if (form.valid()) {
+        //$('#form-profile').trigger('submit')
+
+
+    }
+</script>

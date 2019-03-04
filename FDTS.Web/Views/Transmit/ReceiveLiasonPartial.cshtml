@@ -1,0 +1,25 @@
+﻿@model TraceTransactions
+
+@{
+    Html.DevExpress().PopupControl(settings =>
+    {
+        settings.Name = "ReceiveLiasonPartial";
+        settings.AllowResize = false;
+        settings.ShowHeader = true;
+        settings.ShowOnPageLoad = false;
+        settings.AllowDragging = true;
+        settings.CloseAction = CloseAction.CloseButton;
+        settings.CloseOnEscape = true;
+        settings.Modal = false;
+        settings.CallbackRouteValues = new { Controller = "Transmit", Action = "ReceiveLiasonPartial", traceTransactionid = Model?.Id };
+        settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+        settings.HeaderText = "Liason";
+        settings.Width = Unit.Pixel(300);
+
+        settings.SetContent(() =>
+        {
+            Html.RenderPartial("ReceiveLiasonPartialContent", Model);
+        });
+    }).GetHtml();
+
+}

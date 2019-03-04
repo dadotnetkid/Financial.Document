@@ -1,0 +1,16 @@
+﻿@model TraceDocuments
+
+@{
+    Html.DevExpress().CallbackPanel(settings =>
+    {
+
+        settings.CallbackRouteValues = new { Controller = "transmit", Action = "cbpAddEditTransmitPartial" };
+        settings.Name = "cbpAddEditTransmit";
+        settings.SetContent(() =>
+        {
+            Html.RenderPartial("AddEditTransmitPartial", Model);
+        });
+
+    }).GetHtml();
+
+}

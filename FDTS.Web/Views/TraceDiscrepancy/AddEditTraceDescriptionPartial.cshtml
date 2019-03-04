@@ -1,0 +1,34 @@
+﻿@model TraceDiscrepancies
+@{
+    var descriptions = new UnitOfWork().DiscrepancyDescriptionsRepo.Fetch().OrderBy(m => m.Id);
+    string gridName = ViewBag.GridName;
+}
+<div class="row">
+    <div class="col-lg-6">
+        @{
+            Html.DevExpress().ComboBoxFor(m => m.DiscrepancyDescriptionId, settings =>
+            {
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.Caption = "Discrepancy Description";
+                settings.Properties.CaptionSettings.Position = EditorCaptionPosition.Top;
+
+                settings.Properties.ValueField = "Id";
+                settings.Properties.TextField = "Description";
+
+            }).BindList(args => descriptions.GetRange(args, m => m.Description.Contains(args.Filter)), args => Model.Id).GetHtml();
+        }
+    </div>
+    <div class="col-lg-6">
+        @{
+            Html.DevExpress().TextBoxFor(m => m.DiscrepancyNotes, settings =>
+            {
+                settings.Properties.Caption = "Discrepancy Notes";
+                settings.Properties.CaptionSettings.Position = EditorCaptionPosition.Top;
+                settings.Width = Unit.Percentage(100);
+            }).GetHtml();
+        }
+    </div>
+</div>
+@{
+    Html.ButtonSubmitCancel(gridName);
+}

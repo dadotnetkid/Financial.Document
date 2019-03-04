@@ -1,0 +1,50 @@
+﻿@model TraceDocuments
+
+@{
+    IQueryable<TraceDocuments> model = ViewBag.TraceDocuments;
+}
+@{
+    Html.DevExpress().ComboBoxFor(m => m.Id, settings =>
+    {
+        settings.Name = ViewBag.cboName ?? "TraceDocumentId";
+        settings.Properties.TextField = "Id";
+        settings.Properties.ValueField = "Id";
+        settings.Properties.ValueType = typeof(int);
+        settings.CallbackRouteValues = new { Controller = "Partials", Action = "cboTraceDocumentPartial", cboName = ViewBag.cboName };
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+
+        settings.Width = Unit.Percentage(100);
+        
+
+
+        settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){" + settings.Name+ "ValueChanged(s,e)}";
+
+
+        settings.Properties.Caption = ViewBag.caption;
+        settings.Properties.CaptionSettings.Position = EditorCaptionPosition.Top;
+
+        settings.Properties.Columns.Add(col =>
+        {
+            col.FieldName = "Barcode";
+            col.Caption = "Barcode";
+            col.Width = 90;
+            
+
+        });
+        settings.Properties.Columns.Add("Users.FullName", "Created By", 90);
+        settings.Properties.TextFormatString = "{0}";
+        settings.Properties.DisplayFormatString = "D11";
+
+    }).BindList(args =>
+    {
+        int? id = args.Filter == "" ? (int?)null : Convert.ToInt32(args.Filter);
+        if (id == null)
+            return model.GetRange(args); ;
+
+        return model.GetRange(args, m => m.Id == id); ;
+
+    }, args =>Model.Id)
+    .GetHtml();
+}
+
+

@@ -1,0 +1,28 @@
+﻿@model Users
+
+
+@{
+    IQueryable<Users> users = ViewBag.Users;
+}
+@{
+    Html.DevExpress().ComboBoxFor(m => m.Id, settings =>
+    {
+        settings.Name = ViewBag.cboName ?? "UserId";
+        settings.Properties.TextField = ViewBag.textField ?? "FullName";
+        settings.Properties.ValueField = "Id";
+        settings.CallbackRouteValues = new { Controller = "Partials", Action = "cboUsersPartial", cboName = ViewBag.cboName };
+        settings.Properties.CallbackPageSize = 10;
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+
+        settings.Properties.Caption = ViewBag.caption;
+        settings.Properties.CaptionSettings.Position = EditorCaptionPosition.Top;
+        settings.Width = Unit.Percentage(100);
+        if (ViewBag.clientSide == true)
+        {
+            settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){" + settings.Name + "ValueChanged(s,e)}";
+        }
+        
+    })
+        .BindList(args => users.GetRange(args, m => (m.FirstName + " " + m.LastName).Contains(args.Filter)), args => Model.Id)
+        .GetHtml();
+}

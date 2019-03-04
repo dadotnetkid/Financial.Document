@@ -1,0 +1,18 @@
+﻿@model DocumentAttachments
+@{
+    IQueryable<Departments> departments = ViewBag.Departments;
+}
+
+
+@{
+    Html.DevExpress().ComboBoxFor(m => m.DepartmentId, settings =>
+    {
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.Caption = "Department";
+        settings.Properties.CaptionSettings.Position = EditorCaptionPosition.Top;
+        settings.Properties.ValueField = "Id";
+        settings.Properties.TextField = "DepartmentName";
+        settings.CallbackRouteValues = new { Action = "cboDepartmentPartial", Controller = "DocumentAttachment", item = Model };
+        settings.Properties.CallbackPageSize = 10;
+    }).BindList(args => departments.OrderBy(m => m.Id).GetRange(args), args => Model.DepartmentId).GetHtml();
+}

@@ -1,0 +1,25 @@
+﻿
+@model DocumentAttachments
+
+@{
+    IQueryable<DocumentAttachments> model = ViewBag.DocumentAttachments;
+}
+@{
+    Html.DevExpress().ComboBoxFor(m => m.Id, settings =>
+    {
+        settings.Width = Unit.Percentage(100);
+        settings.Name = ViewBag.cboName ?? "DocumentAttachmentId";
+        settings.Properties.TextField = "AttachmentTitle";
+        settings.Properties.ValueField = "Id";
+
+        settings.CallbackRouteValues = new { Controller = "Partials", Action = "cboDocumentAttachmentPartial", cboName = ViewBag.cboName };
+        settings.Properties.CallbackPageSize = 10;
+        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+
+        settings.Properties.Caption = ViewBag.caption;
+        settings.Properties.CaptionSettings.Position = EditorCaptionPosition.Top;
+
+    }).BindList(args => model.GetRange(args, m => m.AttachmentTitle.Contains(args.Filter)), args => Model.Id)
+        .GetHtml();
+}
+

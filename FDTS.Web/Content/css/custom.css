@@ -1,0 +1,94 @@
+﻿
+
+.margin-top-10 {
+    margin-top: 10px;
+}
+
+
+.hidden {
+    visibility: hidden;
+}
+
+.dxgvEditFormDisplayRow_Moderno td.dxgv, .dxgvInlineEditRow_Moderno td.dxgv,
+.dxgvDetailCell_Moderno td.dxgv, .dxgvDataRow_Moderno td.dxgv,
+.dxgvDetailRow_Moderno.dxgvADR td.dxgvAIC {
+    overflow: hidden;
+    border-top-width: 0;
+    border-left-width: 0;
+    border-bottom: 1px Solid #d1d1d1;
+    border-right: 1px Solid #d1d1d1;
+    padding: 8px 10px 9px;
+    vertical-align: top !important;
+}
+
+.dxflHALSys.dxflVATSys.dxflCaptionCell_Moderno.dxflCaptionCellSys {
+}
+
+.align-center {
+    text-align: center;
+}
+
+.dxscApt {
+    border-left: orange 5px solid;
+}
+
+.margin-bottom-10 {
+    margin-bottom: 10px;
+}
+
+.margin-top-10 {
+    margin-top: 10px;
+}
+
+.dxscApt .dxsc-apt-wrapper {
+    min-height: 70px;
+}
+
+.dxsc-apt-time-container .dxeBase_Moderno {
+}
+
+
+.dxsc-horizontal-same-day-apt .dxsc-apt-time-container span, .dxsc-horizontal-same-day-apt .dxsc-apt-time-container span {
+    font-size: 16px !important;
+}
+
+.margin-top-36 {
+    margin-top: 36px !important;
+}
+
+.error-page {
+    width: 600px;
+    margin: 20px auto 0 auto;
+}
+
+    .error-page > .headline {
+        float: left;
+        font-size: 100px;
+        font-weight: 300;
+    }
+
+    .error-page > .error-content {
+        margin-left: 190px;
+        display: block;
+    }
+
+        .error-page > .error-content > h3 {
+            font-weight: 300;
+            font-size: 25px;
+        }
+
+
+.panel.margin-center {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.field-validation-error {
+    padding: 5px !important;
+    background-color: red;
+    color: white;
+    border-radius: 5px 5px 0px 0px;
+}
+.margin-top-35 {
+    margin-top:35px;
+}

@@ -1,0 +1,28 @@
+﻿@model UserRoles
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        @Html.DevExpress().LabelFor(m => m.Name, settings =>
+        {
+            settings.Width = Unit.Percentage(100);
+
+        }).GetHtml()
+        @Html.DevExpress().TextBoxFor(m => m.Name, settings =>
+        {
+            settings.Width = Unit.Percentage(100);
+
+        }).GetHtml()
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        @Html.DevExpress().LabelFor(m => m.Description, settings =>
+        {
+            settings.Width = Unit.Percentage(100);
+            
+
+        }).GetHtml()
+        @Html.DevExpress().TextBoxFor(m => m.Description, settings =>
+        {
+            settings.Width = Unit.Percentage(100);
+    
+        }).GetHtml()
+    </div>
+</div>

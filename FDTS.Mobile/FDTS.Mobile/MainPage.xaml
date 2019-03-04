@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:FDTS.Mobile"
+             xmlns:vm="clr-namespace:FDTS.Mobile.Services;assembly=FDTS.Mobile.Services"
+             x:Class="FDTS.Mobile.MainPage"
+             Title="Receive Financial Document"
+
+             >
+    <ContentPage.BindingContext>
+        <vm:JwtModel/>
+    </ContentPage.BindingContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <Label Text="{Binding Users.FullName}"  FontSize="Large" Grid.Row="0" />
+        <Button Text="Scan"  HorizontalOptions="Fill" Clicked="btn_Scan"  Grid.Row="1"/>
+        <Button Text="Receive"  HorizontalOptions="Fill" Clicked="btn_Receive" Grid.Row="2" />
+        
+    </Grid>
+</ContentPage>

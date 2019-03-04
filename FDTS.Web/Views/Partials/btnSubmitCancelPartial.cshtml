@@ -1,0 +1,22 @@
+﻿
+<div class="row margin-top-10 margin-bottom-10">
+    <div class="col-lg-12">
+        @{
+            Html.DevExpress().Button(m =>
+            {
+                m.Text = "Update";
+                m.ClientSideEvents.Click = "function(s,e){" + ViewBag.GridviewName + ".UpdateEdit()}";
+                m.Name = ViewBag.btnSubmit ?? "btnSubmit";
+
+            }).GetHtml();
+            Html.DevExpress().Button(m =>
+            {
+                m.Text = "Cancel";
+                m.ClientSideEvents.Click = "function(s,e){" + ViewBag.GridviewName + ".CancelEdit()}";
+                m.Name = ViewBag.btnCancel ?? "btnCancel";
+
+            }).GetHtml();
+        }
+
+    </div>
+</div>

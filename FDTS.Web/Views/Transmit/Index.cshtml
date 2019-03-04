@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewBag.Title = "Transmit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@Html.Action("TransmitGridViewPartial")
+
+
+@Html.Action("ReceiveLiasonPartial")
+
+
+<script>
+    function ReceiveByLiason(keyValue) {
+        ReceiveLiasonPartial.PerformCallback({ traceTransactionid: keyValue });
+        ReceiveLiasonPartial.Show();
+    }
+
+    function EnableBtnSubmitModal(s, e) {
+       
+        checkEmployeeId(s.GetValue());
+    }
+
+
+    function checkEmployeeId(id) {
+        $.ajax({
+            url: '@Url.Action("CheckEmployeeId")',
+            data: { employeeId: id },
+            type:'POST',
+            success: function (e) {
+
+                btnSubmitModal.SetEnabled(e);
+                console.log(e);
+            }
+        });
+    }
+
+    function LiasonPerformCallback(receivingPersonnelId, transId) {
+        ReceiveLiasonPartial.PerformCallback({ receivingPersonnelId: receivingPersonnelId, traceTransactionid: transId });
+        //ReceiveLiasonPartial.Hide();
+        //TransmitGridView.PerformCallback();
+        LiasonPerformCallbackComplete();
+    }
+    function LiasonPerformCallbackComplete() {
+        ReceiveLiasonPartial.Hide();
+        TransmitGridView.PerformCallback();
+    }
+</script>

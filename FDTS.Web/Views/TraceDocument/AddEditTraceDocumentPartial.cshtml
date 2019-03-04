@@ -1,0 +1,67 @@
+﻿@model TraceDocuments
+
+
+<div class="row">
+    <div class="col-lg-4">
+        @{
+            Html.DevExpress().TextBoxFor(m => m.Barcode, settings =>
+            {
+                settings.Properties.Caption = "Barcode";
+                settings.Properties.CaptionSettings.Position = EditorCaptionPosition.Top;
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.NullText = "Barcode";
+            }).GetHtml();
+        }
+    </div>
+    <div class="col-lg-4">
+        @{
+            Html.ComboBoxDocumentAttachment(Model?.DocumentAttachmentId);
+        }
+    </div>
+    <div class="col-lg-4">
+        @{
+            Html.ComboBoxRequestType(Model?.RequestTypeId);
+        }
+    </div>
+</div>
+
+<div class="row margin-top-10">
+    <div class="col-lg-4">
+        @{
+            Html.ComboBoxDepartments(Model?.RequestingDepartmentId);
+        }
+    </div>
+    <div class="col-lg-4">
+        @{
+            Html.ComboBoxUsers(Model?.LiasonId, "LiasonId", "Liason", "EmployeeId",false);
+        }
+    </div>
+
+    <div class="col-lg-4">
+        
+        <label class="dxeCaption_Moderno" style="margin-top:11px">Upload:</label>
+        @using (Html.BeginForm("UploadControlUpload", "TraceDocument", FormMethod.Post))
+        {
+        
+            Html.DevExpress().UploadControl(settings =>
+            {
+                settings.Name = "UploadControl";
+                settings.CallbackRouteValues = new { Controller = "TraceDocument", Action = "UploadControlUpload" };
+                settings.AutoStartUpload = true;
+ 
+                settings.ShowUploadButton = false;
+                settings.ShowProgressPanel = false;
+
+
+                settings.ValidationSettings.Assign(FDTS.Web.Controllers.TraceDocumentControllerUploadControlSettings.UploadValidationSettings);
+            }).GetHtml();
+        }
+
+    </div>
+</div>
+
+@{
+    Html.ButtonSubmitCancel("TraceDocumentGridView");
+}
+
+

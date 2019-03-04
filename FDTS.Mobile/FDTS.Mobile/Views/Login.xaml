@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FDTS.Mobile.Views.Login">
+    <ContentPage.Content>
+        <StackLayout>
+            <Button Text="Scan Barcode Id To Login"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" Clicked="btnLogin" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

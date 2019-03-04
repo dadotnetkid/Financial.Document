@@ -1,0 +1,36 @@
+﻿
+    @{
+        Html.DevExpress().PopupControl(settings =>
+        {
+            settings.Name = "PrintTraceDocumentPartial";
+            settings.AllowResize = true;
+            settings.ShowHeader = true;
+            settings.ShowOnPageLoad = false;
+            settings.AllowDragging = true;
+            settings.CloseAction = CloseAction.CloseButton;
+            settings.CloseOnEscape = false;
+            settings.HeaderText = "Print Trace Document";
+
+            settings.CallbackRouteValues = new { Controller = "TraceDocument", Action = "PrintTraceDocumentPartial" };
+            settings.ClientSideEvents.EndCallback = "function(s,e){s.Show()}";
+            settings.Modal = false;
+            settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+            settings.ShowOnPageLoad = false;
+            
+
+            settings.SetContent(() =>
+            {
+                if (Model != null)
+                {
+                    Html.DevExpress().WebDocumentViewer(webDocumentSettings =>
+                    {
+                        webDocumentSettings.Name = "WebDocumentViewer";
+                        webDocumentSettings.Height = Unit.Pixel(500);
+                    }).Bind(Model).GetHtml();
+                }
+
+
+            });
+        }).GetHtml();
+
+    }
